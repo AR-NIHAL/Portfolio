@@ -105,7 +105,10 @@ class _DesktopHeroSection extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xxl),
                       const Text('Hi, I am', style: AppTextStyles.heroGreeting),
                       const SizedBox(height: AppSpacing.lg),
-                      const Text('Nihal Ahmed', style: AppTextStyles.heroName),
+                      const Text(
+                        'Ashikur Rahman Nihal',
+                        style: AppTextStyles.heroName,
+                      ),
                       const SizedBox(height: AppSpacing.sm),
                       const SizedBox(
                         width: 560,
