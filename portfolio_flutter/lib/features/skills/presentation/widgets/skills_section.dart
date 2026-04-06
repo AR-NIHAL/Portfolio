@@ -61,13 +61,18 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveHelper.isMobile(context);
-    final topBottomPadding = isMobile ? 72.0 : 110.0;
+    final topPadding = isMobile ? 56.0 : 84.0;
+    final bottomPadding = isMobile ? 72.0 : 110.0;
+
+    final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
 
     return SectionContainer(
       backgroundColor: AppColors.background,
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveHelper.horizontalPadding(context),
-        vertical: topBottomPadding,
+      padding: EdgeInsets.fromLTRB(
+        horizontalPadding,
+        topPadding,
+        horizontalPadding,
+        bottomPadding,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,15 +130,16 @@ class _SkillItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveHelper.isMobile(context);
     final width = isMobile ? 96.0 : 118.0;
-    final logoSize = isMobile ? 56.0 : 68.0;
+    final badgeSize = isMobile ? 74.0 : 88.0;
+    final logoSize = isMobile ? 34.0 : 42.0;
 
     return SizedBox(
       width: width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _SkillLogo(skill: skill, size: logoSize),
-          const SizedBox(height: AppSpacing.md),
+          _SkillBadge(skill: skill, badgeSize: badgeSize, logoSize: logoSize),
+          SizedBox(height: isMobile ? 12 : AppSpacing.md),
           Text(
             skill.label,
             textAlign: TextAlign.center,
@@ -150,6 +156,40 @@ class _SkillItem extends StatelessWidget {
   }
 }
 
+class _SkillBadge extends StatelessWidget {
+  const _SkillBadge({
+    required this.skill,
+    required this.badgeSize,
+    required this.logoSize,
+  });
+
+  final _SkillData skill;
+  final double badgeSize;
+  final double logoSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: badgeSize,
+      height: badgeSize,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.white.withOpacity(0.7),
+        border: Border.all(color: AppColors.black.withOpacity(0.08)),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0D000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: _SkillLogo(skill: skill, size: logoSize),
+    );
+  }
+}
+
 class _SkillLogo extends StatelessWidget {
   const _SkillLogo({required this.skill, required this.size});
 
@@ -158,28 +198,27 @@ class _SkillLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (skill.kind) {
-      case _SkillMarkKind.shield:
-        return _ShieldLogo(skill: skill, size: size);
-      case _SkillMarkKind.square:
-        return _SquareLogo(skill: skill, size: size);
-      case _SkillMarkKind.script:
-        return _ScriptLogo(skill: skill, size: size);
-      case _SkillMarkKind.atom:
-        return _AtomLogo(skill: skill, size: size);
-      case _SkillMarkKind.diamond:
-        return _DiamondLogo(skill: skill, size: size);
-      case _SkillMarkKind.figma:
-        return _FigmaLogo(skill: skill, size: size);
-      case _SkillMarkKind.hex:
-        return _HexLogo(skill: skill, size: size);
-      case _SkillMarkKind.wave:
-        return _WaveLogo(skill: skill, size: size);
-      case _SkillMarkKind.leaf:
-        return _LeafLogo(skill: skill, size: size);
-      case _SkillMarkKind.flagCircle:
-        return _FlagCircleLogo(skill: skill, size: size);
-    }
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Center(
+        child: switch (skill.kind) {
+          _SkillMarkKind.shield => _ShieldLogo(skill: skill, size: size),
+          _SkillMarkKind.square => _SquareLogo(skill: skill, size: size),
+          _SkillMarkKind.script => _ScriptLogo(skill: skill, size: size),
+          _SkillMarkKind.atom => _AtomLogo(skill: skill, size: size),
+          _SkillMarkKind.diamond => _DiamondLogo(skill: skill, size: size),
+          _SkillMarkKind.figma => _FigmaLogo(skill: skill, size: size),
+          _SkillMarkKind.hex => _HexLogo(skill: skill, size: size),
+          _SkillMarkKind.wave => _WaveLogo(skill: skill, size: size),
+          _SkillMarkKind.leaf => _LeafLogo(skill: skill, size: size),
+          _SkillMarkKind.flagCircle => _FlagCircleLogo(
+            skill: skill,
+            size: size,
+          ),
+        },
+      ),
+    );
   }
 }
 

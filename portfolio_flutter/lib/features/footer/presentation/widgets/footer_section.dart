@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
@@ -8,7 +9,33 @@ import '../../../../shared/widgets/section_container.dart';
 import '../../../../shared/widgets/social_icon_button.dart';
 
 class FooterSection extends StatelessWidget {
-  const FooterSection({super.key});
+  const FooterSection({
+    super.key,
+    required this.onBackToTop,
+  });
+
+  static const String _githubUrl = 'https://github.com/AR-NIHAL';
+  static const String _linkedinUrl = 'https://www.linkedin.com/in/arnihal/';
+  static const String _emailAddress = 'arnihal.cs@gmail.com';
+
+  final VoidCallback onBackToTop;
+
+  Future<void> _openExternalLink(String url) async {
+    final uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _sendEmail() async {
+    final uri = Uri(
+      scheme: 'mailto',
+      path: _emailAddress,
+    );
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $uri');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,30 +47,30 @@ class FooterSection extends StatelessWidget {
         horizontal: ResponsiveHelper.horizontalPadding(context),
         vertical: isMobile ? 36 : 46,
       ),
-      child: Column(
-        children: [
-          _BackToTopButton(
-            onTap: () {
-              PrimaryScrollController.of(context).animateTo(
-                0,
-                duration: const Duration(milliseconds: 550),
-                curve: Curves.easeInOut,
-              );
-            },
-          ),
+        child: Column(
+          children: [
+          _BackToTopButton(onTap: onBackToTop),
           SizedBox(height: isMobile ? 22 : 26),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: 12,
             runSpacing: 12,
-            children: const [
+            children: [
+              SocialIconButton(
+                icon: Icons.code_rounded,
+                onDark: true,
+                onTap: () => _openExternalLink(_githubUrl),
+              ),
+              SocialIconButton(
+                icon: Icons.work_outline_rounded,
+                onDark: true,
+                onTap: () => _openExternalLink(_linkedinUrl),
+              ),
               SocialIconButton(
                 icon: Icons.alternate_email_rounded,
                 onDark: true,
+                onTap: _sendEmail,
               ),
-              SocialIconButton(icon: Icons.code_rounded, onDark: true),
-              SocialIconButton(icon: Icons.work_outline_rounded, onDark: true),
-              SocialIconButton(icon: Icons.camera_alt_outlined, onDark: true),
             ],
           ),
           SizedBox(height: isMobile ? 20 : 24),

@@ -115,7 +115,7 @@ class AboutSection extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: horizontalGap),
+          SizedBox(height: isMobile ? AppSpacing.md : AppSpacing.lg),
         ],
       ),
     );

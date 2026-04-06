@@ -86,23 +86,6 @@ class _DesktopHeroSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 54,
-                        height: 54,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.border, width: 2),
-                        ),
-                        child: const Text(
-                          'N',
-                          style: TextStyle(
-                            color: AppColors.textPrimary,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.xxl),
                       const Text('Hi, I am', style: AppTextStyles.heroGreeting),
                       const SizedBox(height: AppSpacing.lg),
                       const Text(
@@ -130,10 +113,12 @@ class _DesktopHeroSection extends StatelessWidget {
                                 _HeroActionButton(
                                   label: 'GITHUB',
                                   onTap: onGithubTap,
+                                  width: 172,
                                 ),
                                 _HeroActionButton(
                                   label: 'LINKEDIN',
                                   onTap: onLinkedinTap,
+                                  width: 172,
                                 ),
                               ],
                             ),
@@ -142,6 +127,7 @@ class _DesktopHeroSection extends StatelessWidget {
                               label: 'DOWNLOAD CV',
                               onTap: onDownloadCvTap,
                               width: 180,
+                              isPrimary: true,
                             ),
                           ],
                         ),
@@ -165,14 +151,23 @@ class _DesktopHeroSection extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    width: 330,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white10),
+                  const SizedBox(width: 356, height: 528),
+                  Padding(
+                    padding: const EdgeInsets.all(18),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(24),
+                      child: SizedBox(
+                        width: 320,
+                        height: 492,
+                        child: Image.asset(
+                          'assets/images/profile.png',
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          filterQuality: FilterQuality.high,
+                        ),
+                      ),
                     ),
                   ),
-                  const Icon(Icons.person, size: 240, color: Colors.white24),
                 ],
               ),
             ),
@@ -196,6 +191,10 @@ class _MobileHeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final imageWidth = (screenWidth * 0.60).clamp(220.0, 290.0).toDouble();
+    final imageHeight = (imageWidth * 1.35).clamp(300.0, 390.0).toDouble();
+
     return Stack(
       children: [
         Container(
@@ -203,8 +202,21 @@ class _MobileHeroSection extends StatelessWidget {
           height: double.infinity,
           color: AppColors.black,
         ),
-        const Center(
-          child: Icon(Icons.person, size: 200, color: Colors.white24),
+        Align(
+          alignment: const Alignment(0, -0.10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: SizedBox(
+              width: imageWidth,
+              height: imageHeight,
+              child: Image.asset(
+                'assets/images/profile.png',
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomCenter,
+                filterQuality: FilterQuality.high,
+              ),
+            ),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -229,7 +241,7 @@ class _MobileHeroSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Nihal Ahmed',
+                    'A R NIHAL',
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 36,
@@ -273,6 +285,7 @@ class _MobileHeroSection extends StatelessWidget {
                     onDark: true,
                     compact: true,
                     width: 170,
+                    isPrimary: true,
                   ),
                 ],
               ),
@@ -291,6 +304,7 @@ class _HeroActionButton extends StatefulWidget {
     this.onDark = false,
     this.compact = false,
     this.width,
+    this.isPrimary = false,
   });
 
   final String label;
@@ -298,6 +312,7 @@ class _HeroActionButton extends StatefulWidget {
   final bool onDark;
   final bool compact;
   final double? width;
+  final bool isPrimary;
 
   @override
   State<_HeroActionButton> createState() => _HeroActionButtonState();
@@ -309,12 +324,23 @@ class _HeroActionButtonState extends State<_HeroActionButton> {
   @override
   Widget build(BuildContext context) {
     final borderColor = widget.onDark ? AppColors.white : AppColors.black;
-    final textColor = widget.onDark ? AppColors.white : AppColors.black;
-    final hoverBackground = widget.onDark
-        ? Colors.white.withOpacity(0.08)
-        : Colors.black.withOpacity(0.05);
+    final baseBackground = widget.isPrimary
+        ? (widget.onDark ? AppColors.white : AppColors.black)
+        : Colors.transparent;
+    final textColor = widget.isPrimary
+        ? (widget.onDark ? AppColors.black : AppColors.white)
+        : (widget.onDark ? AppColors.white : AppColors.black);
+    final hoverBackground = widget.isPrimary
+        ? (widget.onDark ? const Color(0xFFEDEDED) : const Color(0xFF181818))
+        : (widget.onDark
+              ? Colors.white.withOpacity(0.08)
+              : Colors.black.withOpacity(0.05));
+    final shadowColor = widget.onDark
+        ? Colors.black.withOpacity(0.12)
+        : Colors.black.withOpacity(0.08);
 
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
@@ -324,12 +350,22 @@ class _HeroActionButtonState extends State<_HeroActionButton> {
           curve: Curves.easeOut,
           width: widget.width,
           padding: EdgeInsets.symmetric(
-            horizontal: widget.compact ? 18 : 24,
-            vertical: widget.compact ? 12 : 15,
+            horizontal: widget.compact ? 18 : 22,
+            vertical: widget.compact ? 11 : 14,
           ),
           decoration: BoxDecoration(
-            color: _hovered ? hoverBackground : Colors.transparent,
+            color: _hovered ? hoverBackground : baseBackground,
             border: Border.all(color: borderColor, width: 1.3),
+            borderRadius: BorderRadius.circular(widget.compact ? 12 : 14),
+            boxShadow: _hovered
+                ? [
+                    BoxShadow(
+                      color: shadowColor,
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
           ),
           child: Text(
             widget.label,

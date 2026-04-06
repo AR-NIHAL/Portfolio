@@ -181,7 +181,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   child: const PortfolioSection(),
                 ),
                 KeyedSubtree(key: _contactKey, child: const ContactSection()),
-                const FooterSection(),
+                FooterSection(
+                  onBackToTop: () {
+                    _scrollController.animateTo(
+                      0,
+                      duration: const Duration(milliseconds: 550),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
               ],
             ),
           ),
