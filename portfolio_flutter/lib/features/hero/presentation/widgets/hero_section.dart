@@ -192,32 +192,50 @@ class _MobileHeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    final imageWidth = (screenWidth * 0.60).clamp(220.0, 290.0).toDouble();
-    final imageHeight = (imageWidth * 1.35).clamp(300.0, 390.0).toDouble();
+
+    // এটা image show করার viewport
+    final imageViewportWidth = (screenWidth * 0.76)
+        .clamp(260.0, 330.0)
+        .toDouble();
+    final imageViewportHeight = (imageViewportWidth * 1.48)
+        .clamp(380.0, 500.0)
+        .toDouble();
 
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
           height: double.infinity,
           color: AppColors.black,
         ),
-        Align(
-          alignment: const Alignment(0, -0.10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+
+        // এই block-টাই main fix
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 36,
+          bottom: 118,
+          child: Center(
             child: SizedBox(
-              width: imageWidth,
-              height: imageHeight,
-              child: Image.asset(
-                'assets/images/profile.png',
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter,
-                filterQuality: FilterQuality.high,
+              width: imageViewportWidth,
+              height: imageViewportHeight,
+              child: ClipRect(
+                child: Transform.scale(
+                  scale: 1.52, // এইটা zoom control করছে
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    'assets/images/profile.png',
+                    fit: BoxFit.contain,
+                    alignment: Alignment.bottomCenter,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ),
               ),
             ),
           ),
         ),
+
         Align(
           alignment: Alignment.bottomCenter,
           child: ClipPath(
