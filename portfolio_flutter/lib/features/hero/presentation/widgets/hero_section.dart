@@ -86,14 +86,14 @@ class _DesktopHeroSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Hi, I am', style: AppTextStyles.heroGreeting),
+                      Text('Hi, I am', style: AppTextStyles.heroGreeting),
                       const SizedBox(height: AppSpacing.lg),
-                      const Text(
+                      Text(
                         'Ashikur Rahman Nihal',
                         style: AppTextStyles.heroName,
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      const SizedBox(
+                      SizedBox(
                         width: 560,
                         child: Text(
                           'Mobile Application Developer / Software Support Engineer',
@@ -151,23 +151,14 @@ class _DesktopHeroSection extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  const SizedBox(width: 356, height: 528),
-                  Padding(
-                    padding: const EdgeInsets.all(18),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(24),
-                      child: SizedBox(
-                        width: 320,
-                        height: 492,
-                        child: Image.asset(
-                          'assets/images/profile.png',
-                          fit: BoxFit.cover,
-                          alignment: Alignment.center,
-                          filterQuality: FilterQuality.high,
-                        ),
-                      ),
+                  Container(
+                    width: 330,
+                    height: 500,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white10),
                     ),
                   ),
+                  const Icon(Icons.person, size: 240, color: Colors.white24),
                 ],
               ),
             ),
@@ -191,51 +182,24 @@ class _MobileHeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
-
-    // এটা image show করার viewport
-    final imageViewportWidth = (screenWidth * 0.76)
-        .clamp(260.0, 330.0)
-        .toDouble();
-    final imageViewportHeight = (imageViewportWidth * 1.48)
-        .clamp(380.0, 500.0)
-        .toDouble();
-
     return Stack(
-      clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
           height: double.infinity,
           color: AppColors.black,
         ),
-
-        // এই block-টাই main fix
-        Positioned(
-          left: 0,
-          right: 0,
-          top: 36,
-          bottom: 118,
-          child: Center(
-            child: SizedBox(
-              width: imageViewportWidth,
-              height: imageViewportHeight,
-              child: ClipRect(
-                child: Transform.scale(
-                  scale: 1.52, // এইটা zoom control করছে
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset(
-                    'assets/images/profile.png',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.bottomCenter,
-                    filterQuality: FilterQuality.high,
-                  ),
-                ),
-              ),
+        Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.asset(
+              'assets/images/profile.jpg',
+              width: 180,
+              height: 220,
+              fit: BoxFit.cover,
             ),
           ),
         ),
-
         Align(
           alignment: Alignment.bottomCenter,
           child: ClipPath(
@@ -259,7 +223,7 @@ class _MobileHeroSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'A R NIHAL',
+                    'Nihal Ahmed',
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 36,

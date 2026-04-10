@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
 class AppTextStyles {
   AppTextStyles._();
 
-  static const String _fontFamily = 'Arial';
-
-  static const TextStyle heroGreeting = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle heroGreeting = GoogleFonts.manrope(
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
     height: 1.2,
   );
 
-  static const TextStyle heroName = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle heroName = GoogleFonts.manrope(
     fontSize: 64,
     fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
@@ -24,55 +21,48 @@ class AppTextStyles {
     letterSpacing: -1.2,
   );
 
-  static const TextStyle heroSubtitle = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle heroSubtitle = GoogleFonts.manrope(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
     height: 1.3,
   );
 
-  static const TextStyle navItem = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle navItem = GoogleFonts.manrope(
     fontSize: 13,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
   );
 
-  static const TextStyle sectionLabel = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle sectionLabel = GoogleFonts.manrope(
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
     letterSpacing: 6,
   );
 
-  static const TextStyle sectionHeading = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle sectionHeading = GoogleFonts.manrope(
     fontSize: 36,
     fontWeight: FontWeight.w800,
     color: AppColors.textPrimary,
     letterSpacing: 1.5,
   );
 
-  static const TextStyle body = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle body = GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimary,
     height: 1.7,
   );
 
-  static const TextStyle bodyMuted = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle bodyMuted = GoogleFonts.manrope(
     fontSize: 15,
     fontWeight: FontWeight.w400,
     color: AppColors.textSecondary,
     height: 1.7,
   );
 
-  static const TextStyle button = TextStyle(
-    fontFamily: _fontFamily,
+  static final TextStyle button = GoogleFonts.manrope(
     fontSize: 12,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,

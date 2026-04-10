@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/app_borders.dart';
 import '../constants/app_colors.dart';
@@ -8,15 +9,18 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData get lightTheme {
+    final baseTextTheme = GoogleFonts.manropeTextTheme();
+
     return ThemeData(
       useMaterial3: true,
+      fontFamily: GoogleFonts.manrope().fontFamily,
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: const ColorScheme.light(
         primary: AppColors.black,
         secondary: AppColors.charcoal,
         surface: AppColors.surface,
       ),
-      textTheme: const TextTheme(
+      textTheme: baseTextTheme.copyWith(
         headlineLarge: AppTextStyles.heroName,
         headlineMedium: AppTextStyles.sectionHeading,
         titleLarge: AppTextStyles.heroGreeting,
