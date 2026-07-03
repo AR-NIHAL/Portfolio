@@ -86,7 +86,7 @@ class _SectionEyebrow extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'IT BERRIES',
+          'CAREER OBJECTIVE',
           style: AppTextStyles.sectionLabel.copyWith(
             color: AppColors.white,
             fontSize: isMobile ? 18 : 22,
