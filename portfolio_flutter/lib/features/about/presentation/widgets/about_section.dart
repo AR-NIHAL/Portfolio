@@ -9,7 +9,9 @@ import '../../../../shared/widgets/section_container.dart';
 import '../../../../shared/widgets/section_title_box.dart';
 
 class AboutSection extends StatelessWidget {
-  const AboutSection({super.key});
+  const AboutSection({super.key, this.onExploreTap});
+
+  final VoidCallback? onExploreTap;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,15 @@ class AboutSection extends StatelessWidget {
     final horizontalGap = isMobile ? AppSpacing.lg : AppSpacing.xxl;
     final verticalGap = isMobile ? AppSpacing.xl : 40.0;
 
+    final sectionSpacing = ResponsiveHelper.sectionSpacing(context);
+
     return SectionContainer(
       backgroundColor: AppColors.background,
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveHelper.horizontalPadding(context),
-        vertical: ResponsiveHelper.sectionSpacing(context),
+      padding: EdgeInsets.only(
+        left: ResponsiveHelper.horizontalPadding(context),
+        right: ResponsiveHelper.horizontalPadding(context),
+        top: sectionSpacing,
+        bottom: isMobile ? sectionSpacing : 32,
       ),
       child: Column(
         children: [
@@ -39,10 +45,10 @@ class AboutSection extends StatelessWidget {
             ),
           ),
           SizedBox(height: isMobile ? 22 : 28),
-          const _ExploreAction(),
-          SizedBox(height: isMobile ? 28 : 36),
+          _ExploreAction(onTap: onExploreTap),
+          SizedBox(height: isMobile ? 20 : 24),
           const DecorativeDivider(),
-          SizedBox(height: isMobile ? 42 : 64),
+          SizedBox(height: isMobile ? 28 : 32),
           LayoutBuilder(
             builder: (context, constraints) {
               if (isMobile || constraints.maxWidth < 760) {
@@ -115,7 +121,7 @@ class AboutSection extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: isMobile ? AppSpacing.md : AppSpacing.lg),
+          SizedBox(height: isMobile ? AppSpacing.md : 8),
         ],
       ),
     );
@@ -123,24 +129,32 @@ class AboutSection extends StatelessWidget {
 }
 
 class _ExploreAction extends StatelessWidget {
-  const _ExploreAction();
+  const _ExploreAction({this.onTap});
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(width: 2, color: AppColors.textPrimary),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Text(
-              'EXPLORE',
-              style: AppTextStyles.button.copyWith(letterSpacing: 2.2),
-            ),
+    return GestureDetector(
+      onTap: onTap,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: IntrinsicHeight(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(width: 2, color: AppColors.textPrimary),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                child: Text(
+                  'EXPLORE',
+                  style: AppTextStyles.button.copyWith(letterSpacing: 2.2),
+                ),
+              ),
+              Container(width: 2, color: AppColors.textPrimary),
+            ],
           ),
-          Container(width: 2, color: AppColors.textPrimary),
-        ],
+        ),
       ),
     );
   }
