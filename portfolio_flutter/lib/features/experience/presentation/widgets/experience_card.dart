@@ -47,22 +47,60 @@ class ExperienceCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            '${experience.duration} • ${experience.location}',
+            experience.location != null
+                ? '${experience.duration} • ${experience.location}'
+                : experience.duration,
             style: AppTextStyles.body.copyWith(
               fontSize: compact ? 12 : 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
-          Text(
-            experience.description,
-            style: AppTextStyles.body.copyWith(
-              height: 1.7,
-              fontSize: compact ? 13 : 14,
-              color: AppColors.textSecondary,
+          if (experience.description != null) ...[
+            const SizedBox(height: AppSpacing.lg),
+            Text(
+              experience.description!,
+              style: AppTextStyles.body.copyWith(
+                height: 1.7,
+                fontSize: compact ? 13 : 14,
+                color: AppColors.textSecondary,
+              ),
             ),
-          ),
+          ],
+          if (experience.highlights != null) ...[
+            const SizedBox(height: AppSpacing.lg),
+            ...experience.highlights!.map(
+              (point) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: compact ? 6 : 8,
+                  left: 8,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '\u2022',
+                      style: AppTextStyles.body.copyWith(
+                        fontSize: compact ? 13 : 14,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        point,
+                        style: AppTextStyles.body.copyWith(
+                          height: 1.6,
+                          fontSize: compact ? 12.5 : 13.5,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
           const SizedBox(height: AppSpacing.lg),
           Wrap(
             spacing: 10,
