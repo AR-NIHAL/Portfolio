@@ -170,7 +170,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 const SizedBox(height: _navbarHeight),
                 KeyedSubtree(key: _heroKey, child: const HeroSection()),
                 const IntroStripSection(),
-                KeyedSubtree(key: _aboutKey, child: const AboutSection()),
+                KeyedSubtree(
+                  key: _aboutKey,
+                  child: AboutSection(
+                    onExploreTap: () => _scrollToSection(
+                      PortfolioSectionType.skills,
+                    ),
+                  ),
+                ),
                 KeyedSubtree(key: _skillsKey, child: const SkillsSection()),
                 KeyedSubtree(
                   key: _experienceKey,

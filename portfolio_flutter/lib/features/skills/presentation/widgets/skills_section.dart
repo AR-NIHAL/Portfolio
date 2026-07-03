@@ -61,7 +61,7 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveHelper.isMobile(context);
-    final topPadding = isMobile ? 56.0 : 84.0;
+    final topPadding = isMobile ? 56.0 : 48.0;
     final bottomPadding = isMobile ? 72.0 : 110.0;
 
     final horizontalPadding = ResponsiveHelper.horizontalPadding(context);
@@ -78,7 +78,7 @@ class SkillsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Center(child: SectionTitleBox(title: 'Skills')),
-          SizedBox(height: isMobile ? 56 : 84),
+          SizedBox(height: isMobile ? 56 : 56),
           _SkillGroup(title: 'USING NOW:', skills: _usingNowSkills),
         ],
       ),
