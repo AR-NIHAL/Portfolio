@@ -30,7 +30,10 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveHelper.isMobile(context);
-    final height = ResponsiveHelper.heroHeight(context);
+    final screenType = ResponsiveHelper.screenType(context);
+    final height = isMobile
+        ? ResponsiveHelper.heroHeight(context)
+        : screenType == ScreenType.largeDesktop ? 600.0 : 540.0;
 
     return Container(
       width: double.infinity,
@@ -79,58 +82,52 @@ class _DesktopHeroSection extends StatelessWidget {
                   padding: const EdgeInsets.only(
                     left: AppSpacing.xxl,
                     right: AppSpacing.xl,
-                    top: AppSpacing.xxl,
-                    bottom: AppSpacing.xxl,
+                    top: 20,
+                    bottom: 20,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Hi, I am', style: AppTextStyles.heroGreeting),
-                      const SizedBox(height: AppSpacing.lg),
+                      const SizedBox(height: 14),
                       Text(
                         'Ashikur Rahman Nihal',
                         style: AppTextStyles.heroName,
                       ),
-                      const SizedBox(height: AppSpacing.sm),
-                      SizedBox(
-                        width: 560,
-                        child: Text(
-                          'Mobile Application Developer / Software Support Engineer',
-                          style: AppTextStyles.heroSubtitle,
-                        ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Mobile Application Developer / Software Support Engineer',
+                        style: AppTextStyles.heroSubtitle,
                       ),
-                      const SizedBox(height: 34),
-                      SizedBox(
-                        width: 360,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              spacing: 16,
-                              runSpacing: 16,
-                              children: [
-                                _HeroActionButton(
-                                  label: 'GITHUB',
-                                  onTap: onGithubTap,
-                                  width: 172,
-                                ),
-                                _HeroActionButton(
-                                  label: 'LINKEDIN',
-                                  onTap: onLinkedinTap,
-                                  width: 172,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            _HeroActionButton(
-                              label: 'DOWNLOAD CV',
-                              onTap: onDownloadCvTap,
-                              width: 180,
-                              isPrimary: true,
-                            ),
-                          ],
-                        ),
+                      const SizedBox(height: 8),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                            spacing: 16,
+                            runSpacing: 16,
+                            children: [
+                              _HeroActionButton(
+                                label: 'GITHUB',
+                                onTap: onGithubTap,
+                                width: 172,
+                              ),
+                              _HeroActionButton(
+                                label: 'LINKEDIN',
+                                onTap: onLinkedinTap,
+                                width: 172,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 14),
+                          _HeroActionButton(
+                            label: 'DOWNLOAD CV',
+                            onTap: onDownloadCvTap,
+                            width: 180,
+                            isPrimary: true,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -151,14 +148,15 @@ class _DesktopHeroSection extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    width: 330,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/profile.png',
+                      width: 330,
+                      height: 500,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const Icon(Icons.person, size: 240, color: Colors.white24),
                 ],
               ),
             ),
@@ -193,9 +191,9 @@ class _MobileHeroSection extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.asset(
-              'assets/images/profile.jpg',
-              width: 180,
-              height: 220,
+              'assets/images/profile.png',
+              width: MediaQuery.of(context).size.width * 0.78,
+              height: MediaQuery.of(context).size.width * 0.78 * 1.22,
               fit: BoxFit.cover,
             ),
           ),
